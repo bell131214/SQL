@@ -1,0 +1,83 @@
+1、查询平均成绩大于60分的同学的学号和平均成绩
+SELECT Sid,AVG(score) FROM sc GROUP BY Sid HAVING AVG(score)>60;
+SELECT Sid AS 学号,AVG(score) AS 平均分数 FROM sc GROUP BY Sid HAVING AVG(score)>60;
+2、查询所有同学的学号、姓名、选课数、总成绩
+SELECT student.Sid,student.Sname,COUNT(sc.Cid),SUM(sc.score) 
+FROM student LEFT JOIN sc ON student.Sid = sc.Sid GROUP BY student.Sid;
+3、查询姓“李”的老师的个数
+ SELECT Tname,Tid, COUNT(teacher.Tid) FROM teacher WHERE Tname LIKE'李%' GROUP BY Tid;
+ // 使用聚合函数一般都要搭配GROUP BY进行分组
+ 4、检索多个列
+ SELECT prod_id, prod_name, prod_price FROM products;
+ 5、检索products表中所有产品供应商的ID
+ SELECT DISTINCT vend_id, FROM products;//返回不同的值，最好是针对一列
+ 6、检索前五行
+ SELECT TOP 5 prod_name FROM Products;（SQL server-TOP）
+ SELECT prod_name FROM Products LIMIT 5;（mysql）
+ SELECT prod_name FROM Products WHERE ROWNUM <=5;（Oracle）
+ 7、检索后面的5行
+ SELECT prod_name FROM Products LIMIT 5 OFFSET 5;
+ //第一个数字是指从哪儿开始，第二个数字是检索的行数
+ 8、使用注释
+ 行内注释：--(ctrl+/)
+ #
+ 多行注释：/*  */
+ 9、SQL语句执行顺序
+ SELECT <DISTINCT去重> [列名....],sum[列名]
+ <聚合函数配合GROUP BY>
+ FROM [表名1] AS <别名1>
+ JOIN [表名2] AS <别名2>
+ ON 表名1.ID = 表名2.ID
+ WHERE <条件>
+ GROUP BY <分组>
+ HAVING <对分组过滤>
+ ORDER BY [列名1],[列名2]...,<排序>--最后显示DESC降序
+ LIMIT <从哪行开始+1> OFFSET <限制显示几行>
+ 10、排序
+ 多列：SELECT prod_name,prod_price FROM products ORDER BY prod_price DESC,prod_name;
+ 按位置排序：SELECT prod_id,prod_price,prod_name FROM products ORDER BY 2 DESC,3;
+ 11、只返回prod_price值为3.49的行
+ SELECT * FROM products WHERE prod_price (=,<,>,!=,<>) 3.49;
+ SELECT * FROM products WHERE vend_id != 'DLL01';//字符串加引号
+ 12、范围：BETWEEN.... AND
+ SELECT * FROM products WHERE prod_price BETWEEN 5 AND 9;
+ 12、空值检查
+ 返回没有标价格的产品（不是0二十NULL）
+ SELECT * FROM products WHERE prod_price IS NULL;
+ 邮箱没写的
+ SELECT * FROM customers WHERE cust_email IS NULL;
+ 13、对多个列进行刷选
+ 供应商DLL01制造且价格小于等于4美元的所有产品的名称和价格
+ SELECT prod_id,prod_price,prod_name,vend_id FROM products 
+ WHERE prod_price <= 4 AND vend_id = 'DLL01';
+14、需要列出价格为10美元及以上，且由DLL01或BRS01制造的所有产品
+SELECT prod_id,prod_price,prod_name,vend_id FROM products 
+WHERE (vend_id = 'DLL01' OR vend_id = 'BRS01') AND prod_price > 10;
+//AND优先级大于OR，所以要加括号
+15、供应商DLL01和BRS01制造的所有产品
+WHERE子句中用来指定要匹配值的清单的关键字，功能IN和OR一样（IN的性能好）
+SELECT * FROM products WHERE vend_id IN('DLL01','BRS01');
+SELECT * FROM Products WHERE vend_id = 'DLL01' OR vend_id = 'BRS01'
+16、列出除DLL01之外的所有供应商制造的产品
+SELECT prod_name FROM Products WHERE NOT vend_id = 'DLL01' ORDER BY prod_name;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
