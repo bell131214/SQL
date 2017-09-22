@@ -60,6 +60,21 @@ SELECT * FROM products WHERE vend_id IN('DLL01','BRS01');
 SELECT * FROM Products WHERE vend_id = 'DLL01' OR vend_id = 'BRS01'
 16、列出除DLL01之外的所有供应商制造的产品
 SELECT prod_name FROM Products WHERE NOT vend_id = 'DLL01' ORDER BY prod_name;
+17、通配符%-0,1，多个
+找出所有包含bean bag的产品
+SELECT prod_id, prod_name FROM Products WHERE prod_name LIKE '%bean bag%'; 
+18、下户线_单个字符
+SELECT * from products WHERE prod_name LIKE"__ inch teddy bear"
+//匹配到二个数字，三个和一个都匹配不到
+19、[]指定字符集-只有微软的Access和SQL Server支持集合
+使用通配符性能下降，尽量不要放在开头；
+20、计算
+订单号20008中的所有物品的汇总价格
+SELECT order_num,prod_id,quantity,item_price,quantity*item_price AS num_price 
+FROM orderitems WHERE order_num='20008';
+21、
+
+
 
 
 
