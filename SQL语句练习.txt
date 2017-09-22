@@ -1,3 +1,10 @@
+在原来的文件增加内容：
+git add SQL语句练习.txt
+git commit -m'SQL必知必会'
+git remote add origin//不要这一步
+git push origin master
+
+
 1、查询平均成绩大于60分的同学的学号和平均成绩
 SELECT Sid,AVG(score) FROM sc GROUP BY Sid HAVING AVG(score)>60;
 SELECT Sid AS 学号,AVG(score) AS 平均分数 FROM sc GROUP BY Sid HAVING AVG(score)>60;
@@ -72,11 +79,39 @@ SELECT * from products WHERE prod_name LIKE"__ inch teddy bear"
 订单号20008中的所有物品的汇总价格
 SELECT order_num,prod_id,quantity,item_price,quantity*item_price AS num_price 
 FROM orderitems WHERE order_num='20008';
-21、
+21、聚合函数
+AVG()返回某列的平均值
+COUNT()返回某列的行数
+MAX()返回某列的最大值
+MIN()返回某列的最小值
+SUM()返回某列值之和
+22、返回商品DLL01为的平均值
+SELECT  AVG(prod_price) AS avg_price FROM products WHERE vend_id = 'DLL01'
 
-
-
-
+使用COUNT(*)对表中行的数目进行计数，不管表列中包含的是空值（NULL）还是非空值。
+使用COUNT(column)对特定列中具有值的行进行计数，忽略NULL值。
+对具有电子邮件地址的客户计数
+SELECT COUNT(cust_email) AS num_cust FROM customers
+23、返回订单号为20005的商品总数
+SELECT SUM(quantity) AS number FROM orderitems WHERE order_num = '20005'
+合计每项物品的item_price*quantity，得出总的订单金额
+SELECT SUM(item_price*quantity) AS total_price FROM OrderItems
+WHERE order_num = 20005;
+24、求价格的最大，最小。。
+SELECT COUNT(*) AS num_items,MAX(prod_price) AS max_price,MIN(prod_price) AS min_price,
+AVG(prod_price) AS avg_price FROM products;
+25、分组
+返回每个供应商提供的产品数目
+SELECT vend_id,COUNT(*) AS num_prods FROM products GROUP BY vend_id;
+26、过滤分组having
+SELECT vend_id,COUNT(*) AS num_prods FROM products GROUP BY vend_id HAVING COUNT(*)>2
+27、列出具有两个以上产品且其价格大于等于4的供应商
+SELECT vend_id,prod_price,COUNT(*) AS num_prods FROM products WHERE prod_price>=4
+GROUP BY vend_id HAVING COUNT(*)>=2;
+//WHERE子句过滤所有prod_price至少为4的行，然后按vend_id分组数据，HAVING子句过滤计数为2或2以上的分组
+28、包含三个或更多物品的订单号和订购物品的数目，按照数量排序
+SELECT order_num ,COUNT(*) AS iterms FROM orderitems
+GROUP BY order_num HAVING COUNT(*)>=3 ORDER BY iterms;
 
 
 
