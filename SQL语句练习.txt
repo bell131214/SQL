@@ -152,7 +152,10 @@ SELECT customers.cust_id,orders.order_num FROM customers,orders
 WHERE customers.cust_id = orders.cust_id;//没有订单的顾客不显示
 SELECT customers.cust_id,orders.order_num FROM customers LEFT JOIN orders
 ON customers.cust_id = orders.cust_id;//包括没有订单顾客在内的所有顾客
-35、
+35、检索所有顾客及每个顾客所下的订单数
+SELECT cust_id,COUNT(*) FROM orders GROUP BY cust_id;
+SELECT customers.cust_id,COUNT(orders.order_num) AS num FROM customers LEFT JOIN orders
+ON customers.cust_id = orders.cust_id GROUP BY customers.cust_id;
 
 
 
