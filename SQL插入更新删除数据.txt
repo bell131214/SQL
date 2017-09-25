@@ -19,3 +19,5 @@ cust_email = 'sam@toyland.com' WHERE cust_id = '1000000006';
 
 “删除数据”-不要省略WHERE子句
 DELETE FROM Customers WHERE cust_id = '1000000007';
+3、删除表
+DROP TABLE CustCopy;//执行这条语句将永久删除该表
