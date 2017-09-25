@@ -156,8 +156,17 @@ ON customers.cust_id = orders.cust_id;//包括没有订单顾客在内的所有�
 SELECT cust_id,COUNT(*) FROM orders GROUP BY cust_id;
 SELECT customers.cust_id,COUNT(orders.order_num) AS num FROM customers LEFT JOIN orders
 ON customers.cust_id = orders.cust_id GROUP BY customers.cust_id;
-
-
+36、组合查询
+需要Illinois、Indiana和Michigan等美国几个州的所有顾客的报表，还想包括不管位于哪个州的所有的Fun4All
+SELECT cust_name,cust_contact,cust_email FROM customers WHERE cust_state IN('IL','IN','MI');
+SELECT cust_name,cust_contact,cust_email FROM customers WHERE cust_name = 'Fun4All';
+组合查询-中间加UNION
+SELECT cust_name,cust_contact,cust_email FROM customers WHERE cust_state IN('IL','IN','MI')
+《UNION》-每个查询必须包含相同的列、表达式或者聚合函数
+SELECT cust_name,cust_contact,cust_email FROM customers WHERE cust_name = 'Fun4All';
+《OR》
+SELECT cust_name,cust_contact,cust_email FROM customers WHERE cust_state IN('IL','IN','MI')
+OR cust_name = 'Fun4All';
 
 
 
