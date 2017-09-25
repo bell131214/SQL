@@ -112,11 +112,47 @@ GROUP BY vend_id HAVING COUNT(*)>=2;
 28、包含三个或更多物品的订单号和订购物品的数目，按照数量排序
 SELECT order_num ,COUNT(*) AS iterms FROM orderitems
 GROUP BY order_num HAVING COUNT(*)>=3 ORDER BY iterms;
-
-
-
-
-
+29、列出订购物品RGAN01的所有顾客
+SELECT cust_name,cust_contact FROM customers WHERE cust_id IN
+(SELECT cust_id FROM orders WHERE order_num 
+IN( SELECT order_num FROM orderitems WHERE prod_id = 'RGAN01'));
+连接查询：
+SELECT cust_name,cust_contact FROM customers,orders,orderitems 
+WHERE customers.cust_id = orders.cust_id
+AND orders.order_num = orderitems.order_num
+AND prod_id = 'RGAN01';
+30、显示Customers表中每个顾客的订单总数
+SELECT cust_name,cust_state,
+(SELECT COUNT(*) FROM orders
+WHERE orders.cust_id = customers.cust_id)
+AS oders FROM customers;
+31、联结：查出二个表中的数据-
+where等值联结
+SELECT vend_name,prod_name,prod_price 
+FROM vendors,products WHERE vendors.vend_id = products.vend_id;
+内联结join  in
+SELECT vend_name,prod_name,prod_price 
+FROM vendors JOIN products ON vendors.vend_id = products.vend_id;
+32、显示订单20007中的物品
+SELECT prod_name, vend_name, prod_price, quantity
+FROM OrderItems, Products, Vendors
+WHERE Products.vend_id = Vendors.vend_id
+AND OrderItems.prod_id = Products.prod_id AND order_num = 20007;
+33、自联结查询
+给与Jim Jones同一公司的所有顾客发送一封信件。
+这个查询要求首先找出Jim Jones工作的公司，然后找出在该公司工作的顾客
+SELECT cust_id,cust_name,cust_contact FROM customers WHERE cust_name = (
+SELECT cust_name FROM customers WHERE cust_contact = 'Jim Jones');
+联结查询：
+SELECT c1.cust_id, c1.cust_name, c1.cust_contact 
+FROM customers AS c1,customers AS c2
+WHERE c1.cust_name = c2.cust_name AND c1.cust_contact = 'Jim Jones';
+34、所有顾客及其订单
+SELECT customers.cust_id,orders.order_num FROM customers,orders
+WHERE customers.cust_id = orders.cust_id;//没有订单的顾客不显示
+SELECT customers.cust_id,orders.order_num FROM customers LEFT JOIN orders
+ON customers.cust_id = orders.cust_id;//包括没有订单顾客在内的所有顾客
+35、
 
 
 
