@@ -1,0 +1,21 @@
+"插入数据"
+1、插入完整的行
+INSERT INTO Customers
+VALUES('1000000006','Toy Land','123 Any Street','New York',
+       'NY','11111','USA',NULL,NULL); 
+2、插入部分行
+INSERT INTO Customers(cust_id,cust_name,cust_address,cust_city,cust_state,cust_zip,cust_country)
+VALUES('1000000007','Toy Land','123 Any Street','New York','NY','11111','USA');
+3、从一个表复制到另一个表
+SELECT * FROM INTO custcopy FROM customers;-SqlServer
+CREATE TABLE custcope AS SELECT * FROM customers;-MariaDB、MySQL、Oracle、PostgreSQL和SQLite
+
+"更新数据"-不要省略WHERE子句
+1、UPDATE customers SET cust_email = 'bell1245@qq.com'
+WHERE cust_id = '1000000006';
+2、多个列
+UPDATE Customers SET cust_contact = 'Sam Roberts',
+cust_email = 'sam@toyland.com' WHERE cust_id = '1000000006';
+
+“删除数据”-不要省略WHERE子句
+DELETE FROM Customers WHERE cust_id = '1000000007';
